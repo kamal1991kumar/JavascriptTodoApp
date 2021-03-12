@@ -16,10 +16,10 @@ class Todos {
                 <h2 class="todo__heading">
                     Todos - <span class="todo__heading__count" id='todoCount'>0</span>
                 </h2>
-                <div class="todo__form">
+                <form onsubmit="return false" class="todo__form">
                     <input type="text" class="todo__form__input" id='inputField' />
                     <button class="todo__form__btn" id='addTodo' onClick="todo.addTodo()">Add Todo</button>
-                </div>
+                </form>
                 <div class="todo__body">
                     <ul id='listing' class="todo__list"></ul>
                 </div>
@@ -37,18 +37,19 @@ class Todos {
     }
 
     addLi(value){
-        const li = `
-            <li class='todo__list__item'>
-                <div class="todo__list__title" id='title${[this.liCount]}'>
+
+        const li = document.createElement('li');
+        li.classList.add('todo__list__item');
+        li.innerHTML = `
+            <div class="todo__list__title" id='title${[this.liCount]}'>
                 ${value}
             </div>
-            <div class="todo__list__action">
-                <button class="todo__list__btn" onClick="todo.edit('title${this.liCount}', '${value}')">Edit</button>
-                <button class="todo__list__btn" onClick="todo.delete(this)">Delete</button>
+            <div class="todo__action">
+                <button class="todo__action__edit" onClick="todo.edit('title${this.liCount}', '${value}')">Edit</button>
+                <button class="todo__action__delete" onClick="todo.delete(this)">Delete</button>
             </div>
-            </li>
         `;
-        this.ul.innerHTML = this.ul.innerHTML + li;
+        this.ul.appendChild(li);
         this.liCount++;
         this.updateCount();
     }
